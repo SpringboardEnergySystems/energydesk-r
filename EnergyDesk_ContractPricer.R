@@ -9,7 +9,7 @@ library(jsonlite)
 base_url <- "https://test-api.hafslund.energydesk.no"
 
 # Token is like a password and should be stored elsewhere/environment
-token<-"8af1d4a7be25fd21ecc53e5f3fbab9dc017a9353"
+token<-""
 hlist <- list(Authorization=paste("Token", token))
 headers <- jsonlite::toJSON(hlist, pretty=TRUE, auto_unbox=TRUE)
 url<- paste(base_url,"/api/curvemanager/retrieve-forwardcurve/", sep = "")
@@ -54,16 +54,18 @@ yield_df <- as.data.frame(yieldcurve_table)
 periods<-list(period_tag="FWDNO1-BASE-JAN3YR",contract_date_from="2023-01-01", contract_date_until="2026-01-01")
 monthly_prof<-c("December","January", "February")
 weekday_prof<-c("Monday", "Tuesday")
+dayprofile_prof<-c(7,8,9,10,11,12,13,14)
 url<- paste(base_url,"/api/bilateral/contractpricer/", sep = "")
 # Specify contract_type as BASELOAD to override monthly/weekday profile
 payloadlist <- list(currency_code="NOK", 
                     price_area="NO1",
-                    period_resolution="Daily",
+                    period_resolution="Daily", # Alternative Hourly if dayprofile is used on individual hours.  
                     contract_type="BASELOAD",
                     periods=list(periods),
                     curve_model="PRICEIT",
                     monthly_profile=monthly_prof,
-                    weekday_profile=weekday_prof
+                    weekday_profile=weekday_prof,
+                    daily_profile=dayprofile_prof
                     )
 
 payload <- jsonlite::toJSON(payloadlist, pretty=TRUE, auto_unbox=TRUE)
