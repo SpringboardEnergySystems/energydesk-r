@@ -1,15 +1,15 @@
 
 # Installing the packages
-#install.packages("httr")
-#install.packages("jsonlite")
+install.packages("httr")
+install.packages("jsonlite")
 
 # Loading packages
 library(httr)
 library(jsonlite)
-base_url <- "http://127.0.0.1:8001"
+base_url <- "https://test-api.hafslund.energydesk.no"
 
 # Token is like a password and should be stored elsewhere/environment
-token<-"fd5005df54b03f410250b764696e7eac475f1a6d"
+token<-"8af1d4a7be25fd21ecc53e5f3fbab9dc017a9353"
 hlist <- list(Authorization=paste("Token", token))
 headers <- jsonlite::toJSON(hlist, pretty=TRUE, auto_unbox=TRUE)
 url<- paste(base_url,"/api/curvemanager/retrieve-forwardcurve/", sep = "")
